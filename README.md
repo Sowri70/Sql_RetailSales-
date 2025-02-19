@@ -103,17 +103,20 @@ SELECT AVG(age)AS Average_Age, category
 
 SELECT 
 		transactions_id, 
-		SUM(total_sale) AS  total_sales 
-		FROM retail_sales
-		WHERE total_sale > 1000
+  		SUM(total_sale) AS  total_sales
+    		FROM retail_sales
+      		WHERE total_sale > 1000
 		GROUP BY transactions_id
 
 -- Q.6 Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.
 
-SELECT gender, category, count(transactions_id) as total_no_of_transactions
-              FROM retail_sales
-			  GROUP BY gender, category 
-			  ORDER BY total_no_of_transactions DESC
+SELECT 
+	gender, 
+ 	category, 
+  	count(transactions_id) as total_no_of_transactions
+            	FROM retail_sales
+		GROUP BY gender, category 
+		ORDER BY total_no_of_transactions DESC
   
 -- Q.7 Write a SQL query to calculate the average sale for each month. Find out best selling month in each year
 
@@ -136,17 +139,17 @@ FROM (
 
 SELECT TOP 5 
               customer_id, 
-			  sum(total_sale) as Total_Sales 
-			  from retail_sales
-			  GROUP BY customer_id
-			  ORDER BY total_sales  DESC;
+	      sum(total_sale) as Total_Sales 
+	      FROM retail_sales
+		   GROUP BY customer_id
+		   ORDER BY total_sales  DESC;
 
 -- Q.9 Write a SQL query to find the number of unique customers who purchased items from each category.
 
 SELECT 
-			COUNT(DISTINCT customer_id) AS count_of_unique_customers,
-			category 
-			FROM retail_sales 
+		COUNT(DISTINCT customer_id) AS count_of_unique_customers,
+		category 
+		FROM retail_sales 
 			GROUP BY category
 			ORDER BY category
 
@@ -156,23 +159,21 @@ WITH hourly_sale
 AS 
 (
 SELECT  
-		   sale_time, 
-       	   CASE 
-            WHEN CAST(DATEPART(HOUR, sale_time) AS INT) BETWEEN 8 AND 12 THEN 'Morning'
+	   sale_time,
+           CASE 
+           WHEN CAST(DATEPART(HOUR, sale_time) AS INT) BETWEEN 8 AND 12 THEN 'Morning'
             WHEN CAST(DATEPART(HOUR, sale_time) AS INT) BETWEEN 12 AND 17 THEN 'Afternoon'
             ELSE 'Evening'
             END AS shift
 FROM retail_sales
 )
 SELECT 
-		shift, 
-		count(*) as total_orders
+	    shift, 
+	    count(*) as total_orders
 FROM hourly_sale
 GROUP BY shift 
 
-
-
-
+--
 
 ## Findings
 
